@@ -5,14 +5,24 @@
 #include <Poco/Data/MySQL/MySQLException.h>
 #include <Poco/Data/SessionFactory.h>
 
-auto main() -> int
+auto main(int argc,char *argv[]) -> int
 {
-    std::string connection_str{"host=localhost;user=test;db=sql_test;password=pzjqUkMnc7vfNHET"};
-
+    if(argc<2) return 0;
+    std::string host(argv[1]);
+    std::cout << "connecting to:" << host << std::endl;
     Poco::Data::MySQL::Connector::registerConnector();
+    std::cout << "connector registered" << std::endl;
+    
+    std::string connection_str;
+    connection_str = "host=";
+    connection_str += host;
+    connection_str += ";user=test;db=sql_test;password=pzjqUkMnc7vfNHET";
+
     Poco::Data::Session session(
         Poco::Data::SessionFactory::instance().create(
             Poco::Data::MySQL::Connector::KEY, connection_str));
+
+
 
     try
     {
