@@ -7,9 +7,10 @@ RUN git clone -b master https://github.com/pocoproject/poco.git && cd poco && mk
 RUN git clone  https://github.com/DVDemon/hl_mai_04_sql.git && cd hl_mai_04_sql && mkdir CMakeFiles && cd CMakeFiles && cmake .. && cmake --build . --config Release && cd /
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 WORKDIR /hl_mai_04_sql/CMakeFiles
-CMD ["./sql_test","localhost"]
-#docker build . -t sql_test
+ENTRYPOINT [ "./sql_test" ]
+CMD ["localhost"]
+#docker build . -t ddzuba/sql_test:latest
 #docker images
 #docker tag
-#docker push
+#docker push ddzuba/sql_test:latest
 #sudo docker run --network="host" -it ddzuba/sql_test /bin/bash 
