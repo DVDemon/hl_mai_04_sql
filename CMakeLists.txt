@@ -27,8 +27,8 @@ target_compile_options(${EXAMPLE_BINARY} PRIVATE -Wall -Wextra -pedantic -Werror
 target_link_libraries(${EXAMPLE_BINARY} PRIVATE 
                              ${CMAKE_THREAD_LIBS_INIT} 
                              ${Poco_LIBRARIES}
-                             "libPocoDataMySQL.so"
-                             "libmysqlclient.so"
+                             "PocoDataMySQL"
+                             "mysqlclient"
                              ZLIB::ZLIB)
 
 
