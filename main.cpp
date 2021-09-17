@@ -16,7 +16,7 @@ auto main(int argc,char *argv[]) -> int
     std::string connection_str;
     connection_str = "host=";
     connection_str += host;
-    connection_str += ";user=test;db=sql_test;password=pzjqUkMnc7vfNHET";
+    connection_str += ";user=stud;db=stud;password=stud";
 
     Poco::Data::Session session(
         Poco::Data::SessionFactory::instance().create(
