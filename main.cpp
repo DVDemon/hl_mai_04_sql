@@ -9,20 +9,20 @@
 
 auto main(int argc, char *argv[]) -> int
 {
-    if (argc < 2)
+    if (argc < 3)
     {
-        std::cout << "Usage: sql_test address" << std::endl;
+        std::cout << "Usage: sql_test address port" << std::endl;
         return 0;
     }
     std::string host(argv[1]);
-    std::cout << "connecting to:" << host << std::endl;
+    std::string port(argv[2]);
+
+    std::cout << "connecting to:" << host <<":"<< port<< std::endl;
     Poco::Data::MySQL::Connector::registerConnector();
     std::cout << "connector registered" << std::endl;
 
     std::string connection_str;
-    connection_str = "host=";
-    connection_str += host;
-    connection_str += ";user=stud;db=stud;password=stud";
+    connection_str = "host="+host+";user=stud;db=archdb;password=stud;port="+port;
 
     Poco::Data::Session session(
         Poco::Data::SessionFactory::instance().create(
@@ -32,11 +32,11 @@ auto main(int argc, char *argv[]) -> int
     {
         Poco::Data::Statement create_stmt(session);
         create_stmt << "CREATE TABLE IF NOT EXISTS `Author` (`id` INT NOT NULL AUTO_INCREMENT,"
-                    << "`first_name` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,"
-                    << "`last_name` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,"
-                    << "`email` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,"
-                    << "`title` VARCHAR(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,"
-                    << "PRIMARY KEY (`id`),KEY `fn` (`first_name`),KEY `ln` (`last_name`));";
+                    << "`first_name` VARCHAR(256) NOT NULL,"
+                    << "`last_name` VARCHAR(256)NOT NULL,"
+                    << "`email` VARCHAR(256) NULL,"
+                    << "`title` VARCHAR(1024) NULL,"
+                    << "PRIMARY KEY (`id`));";
         create_stmt.execute();
         std::cout << "table created" << std::endl;
 
