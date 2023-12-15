@@ -31,13 +31,18 @@ auto main(int argc, char *argv[]) -> int
     try
     {
         Poco::Data::Statement create_stmt(session);
-        create_stmt << "CREATE TABLE IF NOT EXISTS `Author` (`id` INT NOT NULL AUTO_INCREMENT,"
+        create_stmt << "CREATE TABLE IF NOT EXISTS `Author` (`id` INT NOT NULL,"
                     << "`first_name` VARCHAR(256) NOT NULL,"
                     << "`last_name` VARCHAR(256)NOT NULL,"
                     << "`email` VARCHAR(256) NULL,"
                     << "`title` VARCHAR(1024) NULL,"
                     << "PRIMARY KEY (`id`));";
         create_stmt.execute();
+        std::cout << "table created" << std::endl;
+
+        create_stmt << "CREATE SEQUENCE ids START WITH 1 INCREMENT BY 1;";
+        create_stmt.execute();
+
         std::cout << "table created" << std::endl;
 
         Poco::Data::Statement insert(session);
@@ -47,7 +52,7 @@ auto main(int argc, char *argv[]) -> int
         std::string email{"ivanov@ivan.ru"};
         std::string title{"mister"};
 
-        insert << "INSERT INTO Author (first_name,last_name,email,title) VALUES(?, ?, ?, ?)",
+        insert << "INSERT INTO Author (id,first_name,last_name,email,title) VALUES(NEXTVAL(ids),?, ?, ?, ?)",
             Poco::Data::Keywords::use(first_name),
             Poco::Data::Keywords::use(last_name),
             Poco::Data::Keywords::use(email),
@@ -71,9 +76,18 @@ auto main(int argc, char *argv[]) -> int
         while (!select.done())
         {
             if(select.execute()){
-            std::cout << id << ":[" << first_name << "," << last_name << "," << email << "," << title << "]" << std::endl;
+                std::cout << id << ":[" << first_name << "," << last_name << "," << email << "," << title << "]" << std::endl;
             }
         };
+
+
+        Poco::Data::Statement ids(session);
+        ids << "SELECT NEXTVAL(ids)", Poco::Data::Keywords::into(id); 
+        if(!ids.done())
+            if(ids.execute())
+                std::cout << "next_sequence:" << id << std::endl;
+            
+        
     }
     catch (Poco::Data::MySQL::ConnectionException &e)
     {

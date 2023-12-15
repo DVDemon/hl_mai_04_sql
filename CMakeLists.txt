@@ -20,8 +20,7 @@ add_executable(${EXAMPLE_BINARY} main.cpp )
 target_link_libraries(${EXAMPLE_BINARY} PRIVATE 
                              ${CMAKE_THREAD_LIBS_INIT} 
                              ${Poco_LIBRARIES}
-                             "PocoDataMySQL"                        
-                             ZLIB::ZLIB)
+                             "PocoDataMySQL")
 
 target_compile_options(${EXAMPLE_BINARY} PRIVATE -Wall -Wextra -pedantic -Werror )
 set_target_properties(${EXAMPLE_BINARY} PROPERTIES LINKER_LANGUAGE CXX)
