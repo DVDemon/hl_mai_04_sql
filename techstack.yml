@@ -2,7 +2,7 @@ repo_name: DVDemon/hl_mai_04_sql
 report_id: 79b71745c1ae22de2c678bdfdce3f43a
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-05T08:57:49+00:00'
+timestamp: '2024-02-29T18:31:14+00:00'
 requested_by: DVDemon
 provider: github
 branch: main
@@ -20,7 +20,7 @@ tools:
   detection_source_url: https://github.com/DVDemon/hl_mai_04_sql
   detection_source: Repo Metadata
 - name: CMake
-  description: 'An open-source system that manages the build process '
+  description: An open-source system that manages the build process
   website_url: http://www.cmake.org/
   open_source: false
   hosted_saas: false
